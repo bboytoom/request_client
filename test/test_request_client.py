@@ -27,7 +27,9 @@ class TestRequestClient(BaseTestClass):
         object_helper = RequestClient(self.api)
 
         result = object_helper.get()
-        self.assert_json_result(result, expected_response)
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @httpretty.activate
     def test_request_get_with_auth_error(self):
@@ -63,7 +65,9 @@ class TestRequestClient(BaseTestClass):
                                       password='Test12345678')
 
         result = object_helper.get()
-        self.assert_json_result(result, expected_response)
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @patch('src.request_client.requests')
     def test_request_get_with_auth_bearer_success(self,
@@ -84,7 +88,8 @@ class TestRequestClient(BaseTestClass):
         result = object_helper.get(endpoint='/api/v1/test',
                                    access_token='f1338ca26835863f671403941738a7b49e740fc0')
 
-        self.assert_json_result(result, expected_response)
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @patch('src.request_client.requests')
     def test_request_get_with_path(self,
@@ -106,7 +111,9 @@ class TestRequestClient(BaseTestClass):
                                       password='Test12345678')
 
         result = object_helper.get(endpoint='/api/v1/test')
-        self.assert_json_result(result, expected_response)
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @patch('src.request_client.requests')
     def test_request_get_with_query_string(self,
@@ -128,7 +135,9 @@ class TestRequestClient(BaseTestClass):
                                       password='Test12345678')
 
         result = object_helper.get(endpoint='/api/v1/test?name=test&last=test')
-        self.assert_json_result(result, expected_response)
+
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @patch('src.request_client.requests')
     def test_request_post_success(self,
@@ -153,7 +162,8 @@ class TestRequestClient(BaseTestClass):
                                     access_token='f1338ca26835863f671403941738a7b49e740fc0',
                                     json=json.dumps(data))
 
-        self.assert_json_result(result, expected_response)
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @httpretty.activate
     def test_request_post_with_path_error(self):
@@ -196,7 +206,8 @@ class TestRequestClient(BaseTestClass):
                                    access_token='f1338ca26835863f671403941738a7b49e740fc0',
                                    json=json.dumps(data))
 
-        self.assert_json_result(result, expected_response)
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, expected_response)
 
     @patch('src.request_client.requests')
     def test_request_delete_success(self,
@@ -210,4 +221,5 @@ class TestRequestClient(BaseTestClass):
         result = object_helper.delete(endpoint='/api/v1/test/1',
                                       access_token='f1338ca26835863f671403941738a7b49e740fc0')
 
-        self.assert_json_result(result, {})
+        self.assertIsInstance(result, dict)
+        self.assertEqual(result, {})
